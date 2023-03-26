@@ -12,7 +12,7 @@ class MainWindow(QtWidgets.QMainWindow):
             "QFrame Qpushutton {font-size:10pt; font-family:Veranda;"
             "color:black;font-weight:bold;}"
             "MyLabel {font-size:14pt;font-family:Veranda;"
-            "border:2px solid #9AA6F7;}")
+            "border:2px solid #000000;}")
         self.settings = QtCore.QSettings("Прохоренок и Дронов", "Судоку")
         self.printer = QtPrintSupport.QPrinter()
         self.sudoku = Widget()
