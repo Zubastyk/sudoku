@@ -8,7 +8,7 @@ class Widget(QtWidgets.QWidget):
         vBoxMain = QtWidgets.QVBoxLayout()
         frame1 = QtWidgets.QFrame()
         frame1.setStyleSheet(
-            "background-color:#9AA6A7;border:lpx solid #9AA6A7;")
+            "background-color:#9AA6A7;border:1px solid #9AA6A7;")
         grid = QtWidgets.QGridLayout()
         grid.setSpacing(0)
         idColor = (3, 4, 5, 12, 13, 14, 21, 22, 23, 27, 28, 29, 36, 37, 38, 45,
@@ -85,7 +85,7 @@ class Widget(QtWidgets.QWidget):
             if tid < 0:
                 tid += 81
             self.onChangeCellFocus(tid)    
-        elif key == QtCore.Qt.Key.Key_1 and key <= QtCore.Qt.Key.Key_9:
+        elif key >= QtCore.Qt.Key.Key_1 and key <= QtCore.Qt.Key.Key_9:
             self.cells[self.idCellInFocus].setNewText(chr(key))
         elif key == QtCore.Qt.Key.Key_Delete or \
              key == QtCore.Qt.Key.Key_Backspace or \
@@ -135,7 +135,7 @@ class Widget(QtWidgets.QWidget):
                 
     def onBlockCells(self):
         for cell in self.cells:
-            if cell.text() != "" and cell.isCellChange:
+            if cell.text() and cell.isCellChange:
                 cell.setCellBlock()
     
     def onClearBlockCell(self):

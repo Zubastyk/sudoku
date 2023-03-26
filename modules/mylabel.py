@@ -32,6 +32,7 @@ class MyLabel(QtWidgets.QLabel):
         self.setStyleSheet("background-color:" + self.bgColorCurrent +
                            ";color:" + self.fontColorCurrent + ";")
         
+        
     def setCellFocus(self):
         self.bgColorCurrent = self.colorYellow
         self.showColorCurrent()
@@ -42,12 +43,12 @@ class MyLabel(QtWidgets.QLabel):
     
     def setCellBlock(self):
         self.isCellChange = False
-        self.fontColorCerrent = self.colorRed
+        self.fontColorCurrent = self.colorRed
         self.showColorCurrent()
         
     def clearCellBlock(self):
         self.isCellChange = True
-        self.fontColorCerrent = self.colorBlack
+        self.fontColorCurrent = self.colorBlack
         self.showColorCurrent()
 
     def setNewText(self, text):
