@@ -1,7 +1,7 @@
 from PyQt6 import QtCore, QtGui, QtWidgets, QtPrintSupport
 import re
 from modules.widget import Widget
-
+from modules.previewdialog import PreviewDialog
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
@@ -43,7 +43,25 @@ class MainWindow(QtWidgets.QMainWindow):
         
         action = myMenuFile.addAction("&Сохранить кмпактно...", QtGui.QKeySequence("Ctrl+O"), 
                                       self.onSaveMini)
-        action.setStatusTip("Сохранение головоломки в компактномформате")
+        action.setStatusTip("Сохранение головоломки в компактном формате")
+        
+        myMenuFile.addSeparator()
+        toolBar.addSeparator()
+        
+        action = myMenuFile.addAction(QtGui.QIcon(r"images/Print.png"),
+                            "&Печать...", QtGui.QKeySequence("Ctrl+P"),
+                            self.onPrint)
+        toolBar.addAction(action)
+        action.setStatusTip("Печать головоломки")
+        
+        action = myMenuFile.addAction(QtGui.QIcon(r"images/Preview.png"),
+                            "&Предварительный просмотр...", self.onPreview)
+        toolBar.addAction(action)
+        action.setStatusTip("Предварительный просмотр головоломки")
+        
+        action = myMenuFile.addAction("П&араметры страницы...", 
+                            self.onPageSetup)
+        action.setStatusTip("Задание параметров страницы")
         
         myMenuFile.addSeparator()
         toolBar.addSeparator()
@@ -207,7 +225,21 @@ class MainWindow(QtWidgets.QMainWindow):
                 QtWidgets.QMessageBox.information(self, "Судоку",
                             "Не удалось сохранить файл")
                 
-                
+    def onPrint(self):
+        pd = QtPrintSupport.QPrintDialog(self.printer, parent=self)
+        pd.setOption(
+            QtPrintSupport.QPrintDialog.PrintDialogOption.PrintToFile |
+            QtPrintSupport.QPrintDialog.PrintDialogOption.PrintSelection)
+        if pd.exec() == QtWidgets.QDialog.DialogCode.Accepted:
+            self.sudoku.print(self.printer)
+            
+    def onPreview(self):
+        pd = PreviewDialog(self)
+        pd.exec()
+        
+    def onPageSetup(self):
+        pd = QtPrintSupport.QPageSetupDialog(self.printer, parent=self)
+        pd.exec()            
             
     
     def dataErrorMsg(self):

@@ -192,4 +192,26 @@ class Widget(QtWidgets.QWidget):
                 self.cells[i//2].setText("" if data[i+1] == "0" else data[i+1])
             self.onChangeCellFocus(0)
     
-    
+    def print(self, printer):
+        penText = QtGui.QPen(QtGui.QColor(MyLabel.colorBlack), 1)
+        penBorder = QtGui.QPen(QtGui.QColor(QtCore.Qt.GlobalColor.darkGray), 1)
+        bruchOrange = QtGui.QBrush(QtGui.QColor(MyLabel.colorOrange))
+        brushGrey = QtGui.QBrush(QtGui.QColor(MyLabel.colorGrey))
+        painter = QtGui.QPainter()
+        painter.begin(printer)
+        painter.setFont(QtGui.QFont("Veranda", pointSize=14))
+        i = 0
+        for j in range(0, 9):
+            for k in range(0, 9):
+                x = k * 30
+                y = j * 30
+                painter.setPen(penBorder)
+                painter.setBrush(brushGrey if self.cells[i].bgColorDefault == MyLabel.colorGrey else bruchOrange)
+                painter.drawRect(x, y, 30, 30)
+                painter.setPen(penText)
+                painter.drawText(x, y, 30, 30,
+                                QtCore.Qt.AlignmentFlag.AlignCenter,
+                                self.cells[i].text())
+                i += 1
+        painter.end()
+        
